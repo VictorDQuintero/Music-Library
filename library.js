@@ -64,8 +64,26 @@ const printTracks = function () {
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 const printPlaylist = function (playlistId) {
   //takes playlistId, accesses the playlists, by taking the playlistId as the key of the object, then inside the value-object it accesses the track id in the array
-  // this can be done with Object.keys()
+  // this can be done with Object.keys() and a for loop
+
+  //takes the elements of the array and accesses the tracks object
+  let tracksArr = [];
+  tracksArr = Object.values(library.playlists[playlistId].tracks);
+  console.log(
+    `${library.playlists[playlistId].id}: ${library.playlists[playlistId].name} - ${library.playlists[playlistId].tracks.length} tracks`
+  );
+  for (const track of tracksArr) {
+    console.log(
+      `${library.tracks[track].id}: ${library.tracks[track].name} by ${library.tracks[track].artist} (${library.tracks[track].album}) `
+    );
+  }
 };
+
+let playlistId = "p01";
+printPlaylist(playlistId);
+console.log("------");
+playlistId = "p02";
+printPlaylist(playlistId);
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function (trackId, playlistId) {};
