@@ -79,14 +79,23 @@ const printPlaylist = function (playlistId) {
   }
 };
 
-let playlistId = "p01";
-printPlaylist(playlistId);
-console.log("------");
-playlistId = "p02";
-printPlaylist(playlistId);
+// let playlistId = "p01";
+// printPlaylist(playlistId);
+// console.log("------");
+// playlistId = "p02";
+// printPlaylist(playlistId);
 
 // adds an existing track to an existing playlist
-const addTrackToPlaylist = function (trackId, playlistId) {};
+const addTrackToPlaylist = function (trackId, playlistId) {
+  //perhaps some testing would be good:
+  // test that there is a track with that id
+  // test that that track isn't already in that playlist
+  // rearreange the array accordingly
+  library.playlists[playlistId].tracks.push(trackId);
+};
+
+addTrackToPlaylist("t01", "p01");
+console.log(library.playlists);
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
