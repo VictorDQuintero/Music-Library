@@ -27,6 +27,7 @@ const library = {
     // prints a list of all playlists, in the form:
     // p01: Coding Music - 2 tracks
     // p02: Other Playlist - 1 tracks
+
     for (const playlistsKey in this.playlists) {
       console.log(
         `${this.playlists[playlistsKey].id}: ${this.playlists[playlistsKey].name} - ${this.playlists[playlistsKey].tracks.length} tracks`
@@ -43,23 +44,40 @@ const library = {
   },
 
   printPlaylist: function (playlistId) {
-    let playlistsKeyArr = Object.keys(this.playlists); //creates an array of the playlists inside of the object
-    let counter = 1; // initializes a counter at 1
+    // let playlistsKeyArr = Object.keys(this.playlists); //creates an array of the playlists inside of the object
+    // let counter = 1; // initializes a counter at 1
 
-    for (const playlistsKey of playlistsKeyArr) {
-      if (this.playlists[playlistsKey].id === playlistId) {
-        // if the value sent to the function (playlistId) exists in the array
-        console.log(
-          `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
-        );
+    // for (const playlistsKey of playlistsKeyArr) {
+    //   if (this.playlists[playlistsKey].id === playlistId) {
+    //     // if the value sent to the function (playlistId) exists in the array
+    //     console.log(
+    //       `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
+    //     );
 
-        break;
-      } else if (playlistsKeyArr.length === counter) {
-        //if the loop goes through the array and hasn't found a match between the keys and the value sent
-        console.log(`${playlistId} does not exist`);
-        return;
-      }
-      counter++;
+    //     break;
+    //   } else if (playlistsKeyArr.length === counter) {
+    //     //if the loop goes through the array and hasn't found a match between the keys and the value sent
+    //     console.log(`${playlistId} does not exist`);
+    //     return;
+    //   }
+    //   counter++;
+    // }
+
+    // for (const tracksKey of this.playlists[playlistId].tracks) {
+    //   // loops through the tracks properties of the object
+    //   console.log(
+    //     `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
+    //   );
+    // }
+
+    if (this.playlists[playlistId]) {
+      console.log(
+        `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
+      );
+    } else {
+      //if the loop goes through the array and hasn't found a match between the keys and the value sent
+      console.log(`${playlistId} does not exist`);
+      return;
     }
 
     for (const tracksKey of this.playlists[playlistId].tracks) {
@@ -71,52 +89,69 @@ const library = {
   },
 
   addTrackToPlaylist: function (trackId, playlistId) {
-    const tracksKeysArr = Object.keys(this.tracks);
-    let counter = 1;
-    let playlistsKeyArr = Object.keys(this.playlists);
-    let isPlaylist;
-    let isTrack;
+    // const tracksKeysArr = Object.keys(this.tracks);
+    // let counter = 1;
+    // let playlistsKeyArr = Object.keys(this.playlists);
+    // let isPlaylist;
+    // let isTrack;
 
-    for (const tracksKey of tracksKeysArr) {
-      // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
-      if (trackId === this.tracks[tracksKey].id) {
-        isTrack = true;
-        break;
-      } else if (tracksKeysArr.length === counter) {
-        // if loop has reached the end and it hasn't found a match then function stops
-        console.log(`${trackId} does not exist`);
-        return;
-      }
-      counter++;
-    }
-    counter = 1; // resets counter
+    // for (const tracksKey of tracksKeysArr) {
+    //   // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
+    //   if (trackId === this.tracks[tracksKey].id) {
+    //     isTrack = true;
+    //     break;
+    //   } else if (tracksKeysArr.length === counter) {
+    //     // if loop has reached the end and it hasn't found a match then function stops
+    //     console.log(`${trackId} does not exist`);
+    //     return;
+    //   }
+    //   counter++;
+    // }
+    // counter = 1; // resets counter
 
-    for (const playlistsKey of playlistsKeyArr) {
-      // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
-      if (this.playlists[playlistsKey].id === playlistId) {
-        isPlaylist = true;
-        break;
-      } else if (playlistsKeyArr.length === counter) {
-        console.log(`${playlistId} does not exist`);
-        return;
-      }
-      counter++;
-    }
+    // for (const playlistsKey of playlistsKeyArr) {
+    //   // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
+    //   if (this.playlists[playlistsKey].id === playlistId) {
+    //     isPlaylist = true;
+    //     break;
+    //   } else if (playlistsKeyArr.length === counter) {
+    //     console.log(`${playlistId} does not exist`);
+    //     return;
+    //   }
+    //   counter++;
+    // }
 
-    if (isPlaylist && isTrack) {
-      // if both playlistId and trackId exist in the object
-      let playlistTrackArr = Object.values(this.playlists[playlistId].tracks);
-      for (const trackInArr of playlistTrackArr) {
-        // checks if track isn't already in the playlist
-        if (trackInArr === trackId) {
-          console.log(`${trackId} is already in ${playlistId}`);
-          return;
-        }
-      }
-    }
-    this.playlists[playlistId].tracks.push(trackId);
+    // if (isPlaylist && isTrack) {
+    //   // if both playlistId and trackId exist in the object
+    //   let playlistTrackArr = Object.values(this.playlists[playlistId].tracks);
+    //   for (const trackInArr of playlistTrackArr) {
+    //     // checks if track isn't already in the playlist
+    //     if (trackInArr === trackId) {
+    //       console.log(`${trackId} is already in ${playlistId}`);
+    //       return;
+    //     }
+    //   }
+    // }
+    // this.playlists[playlistId].tracks.push(trackId);
 
     //TO DO: rearreange the array accordingly
+
+    if (this.playlists[playlistId]) {
+      if (this.tracks[trackId]) {
+        for (const track of Object.values(this.playlists[playlistId].tracks)) {
+          if (track === trackId) {
+            console.log(`${trackId} is already in ${playlistId}`);
+            return;
+          }
+        }
+      } else {
+        console.log(`${playlistId} does not exist`);
+      }
+    } else {
+      console.log(`${trackId} does not exist`);
+    }
+
+    this.playlists[playlistId].tracks.push(trackId);
   },
 
   generateUid: function () {
@@ -147,41 +182,41 @@ const library = {
 };
 
 /* TEST */
-library.printPlaylists();
-console.log("------");
+// library.printPlaylists();
+// console.log("------");
 
-library.printTracks();
-console.log("------");
+// library.printTracks();
+// console.log("------");
 
-console.log("------");
+// console.log("------");
 
-let playlistId = "p01";
-library.printPlaylist(playlistId);
-console.log("------");
-playlistId = "p02";
-library.printPlaylist(playlistId);
-console.log("------");
-playlistId = "p03";
-library.printPlaylist(playlistId);
-console.log("------");
+// let playlistId = "p01";
+// library.printPlaylist(playlistId);
+// console.log("------");
+// playlistId = "p02";
+// library.printPlaylist(playlistId);
+// console.log("------");
+// playlistId = "p03";
+// library.printPlaylist(playlistId);
+// console.log("------");
 
-console.log("------");
+// console.log("------");
 
-library.addTrackToPlaylist("t02", "p01");
+library.addTrackToPlaylist("t03", "p01");
 console.log(library.playlists);
 
-console.log("------");
+// console.log("------");
 
-library.addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
-console.log(library);
+// library.addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
+// console.log(library);
 
-/* TEST */
-library.addPlaylist("Rockin' Music");
-console.log(library);
+// /* TEST */
+// library.addPlaylist("Rockin' Music");
+// console.log(library);
 
-// STRETCH:
-// given a query string string, prints a list of tracks
-// where the name, artist or album contains the query string (case insensitive)
-// tip: use "string".search("tri")
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
-const printSearchResults = function (query) {};
+// // STRETCH:
+// // given a query string string, prints a list of tracks
+// // where the name, artist or album contains the query string (case insensitive)
+// // tip: use "string".search("tri")
+// // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
+// const printSearchResults = function (query) {};
