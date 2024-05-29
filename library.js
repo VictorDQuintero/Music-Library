@@ -63,38 +63,31 @@ const printTracks = function () {
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
 // t02: Model View Controller by James Dempsey (WWDC 2003)
 const printPlaylist = function (playlistId) {
-  //takes playlistId, accesses the playlists, by taking the playlistId as the key of the object, then inside the value-object it accesses the track id in the array
-  // this can be done with Object.keys() and a for loop
+  let playlistsKeyArr = Object.keys(library.playlists); //creates an array of the playlists inside of the object
+  let counter = 1; // initializes a counter at 1
 
-  //takes the elements of the array and accesses the tracks object
-
-  let playlistsIdArr = [];
-
-  for (const playlistsKey in library.playlists) {
-    playlistsIdArr.push(library.playlists[playlistsKey].id); //Object.values() treats the values that are strings as objects and will deconstruct the string
-  } // i don't think this array is necessary, do the test inside the loop, break when true, return when false, no need to add a variable just keep using the sent value
-  console.log(playlistsIdArr);
-  for (let i = 0; i < playlistsIdArr.length; i++) {
-    if (playlistsIdArr[i] === playlistId) {
+  for (const playlistsKey of playlistsKeyArr) {
+    if (library.playlists[playlistsKey].id === playlistId) {
+      // if the value sent to the function (playlistId) exists in the array
       console.log(
         `${library.playlists[playlistId].id}: ${library.playlists[playlistId].name} - ${library.playlists[playlistId].tracks.length} tracks`
       );
+
       break;
-    } else if (
-      playlistsIdArr[i] !== playlistId &&
-      i === playlistsIdArr.length - 1
-    ) {
+    } else if (playlistsKeyArr.length === counter) {
+      //if the loop goes through the array and hasn't found a match between the keys and the value sent
       console.log(`${playlistId} does not exist`);
       return;
     }
+    counter++;
   }
 
-  for (const trackId of library.playlists[playlistId].tracks) {
+  for (const tracksKey of library.playlists[playlistId].tracks) {
+    // loops through the tracks properties of the library object
     console.log(
-      `${library.tracks[trackId].id}: ${library.tracks[trackId].name} by ${library.tracks[trackId].artist} (${library.tracks[trackId].album}) `
+      `${library.tracks[tracksKey].id}: ${library.tracks[tracksKey].name} by ${library.tracks[tracksKey].artist} (${library.tracks[tracksKey].album}) `
     );
   }
-  // tracksIdArr = Object.values(library.playlists[playlistId].tracks.);
 };
 
 let playlistId = "p01";
