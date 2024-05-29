@@ -67,23 +67,44 @@ const printPlaylist = function (playlistId) {
   // this can be done with Object.keys() and a for loop
 
   //takes the elements of the array and accesses the tracks object
-  let tracksArr = [];
-  tracksArr = Object.values(library.playlists[playlistId].tracks);
-  console.log(
-    `${library.playlists[playlistId].id}: ${library.playlists[playlistId].name} - ${library.playlists[playlistId].tracks.length} tracks`
-  );
-  for (const track of tracksArr) {
+
+  let playlistsIdArr = [];
+
+  for (const playlistsKey in library.playlists) {
+    playlistsIdArr.push(library.playlists[playlistsKey].id); //Object.values() treats the values that are strings as objects and will deconstruct the string
+  } // i don't think this array is necessary, do the test inside the loop, break when true, return when false, no need to add a variable just keep using the sent value
+  console.log(playlistsIdArr);
+  for (let i = 0; i < playlistsIdArr.length; i++) {
+    if (playlistsIdArr[i] === playlistId) {
+      console.log(
+        `${library.playlists[playlistId].id}: ${library.playlists[playlistId].name} - ${library.playlists[playlistId].tracks.length} tracks`
+      );
+      break;
+    } else if (
+      playlistsIdArr[i] !== playlistId &&
+      i === playlistsIdArr.length - 1
+    ) {
+      console.log(`${playlistId} does not exist`);
+      return;
+    }
+  }
+
+  for (const trackId of library.playlists[playlistId].tracks) {
     console.log(
-      `${library.tracks[track].id}: ${library.tracks[track].name} by ${library.tracks[track].artist} (${library.tracks[track].album}) `
+      `${library.tracks[trackId].id}: ${library.tracks[trackId].name} by ${library.tracks[trackId].artist} (${library.tracks[trackId].album}) `
     );
   }
+  // tracksIdArr = Object.values(library.playlists[playlistId].tracks.);
 };
 
-// let playlistId = "p01";
-// printPlaylist(playlistId);
-// console.log("------");
-// playlistId = "p02";
-// printPlaylist(playlistId);
+let playlistId = "p01";
+printPlaylist(playlistId);
+console.log("------");
+playlistId = "p02";
+printPlaylist(playlistId);
+console.log("------");
+playlistId = "p03";
+printPlaylist(playlistId);
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function (trackId, playlistId) {
@@ -94,8 +115,8 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   library.playlists[playlistId].tracks.push(trackId);
 };
 
-addTrackToPlaylist("t01", "p01");
-console.log(library.playlists);
+// addTrackToPlaylist("t01", "p01");
+// console.log(library.playlists);
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
