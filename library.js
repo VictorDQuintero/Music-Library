@@ -23,172 +23,164 @@ const library = {
     p01: { id: "p01", name: "Coding Music", tracks: ["t01", "t02"] },
     p02: { id: "p02", name: "Other Playlist", tracks: ["t03"] },
   },
+  printPlaylists: function () {
+    // prints a list of all playlists, in the form:
+    // p01: Coding Music - 2 tracks
+    // p02: Other Playlist - 1 tracks
+    for (const playlistsKey in this.playlists) {
+      console.log(
+        `${this.playlists[playlistsKey].id}: ${this.playlists[playlistsKey].name} - ${this.playlists[playlistsKey].tracks.length} tracks`
+      );
+    }
+  },
+
+  printTracks: function () {
+    for (const tracksKey in this.tracks) {
+      console.log(
+        `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
+      );
+    }
+  },
+
+  printPlaylist: function (playlistId) {
+    let playlistsKeyArr = Object.keys(this.playlists); //creates an array of the playlists inside of the object
+    let counter = 1; // initializes a counter at 1
+
+    for (const playlistsKey of playlistsKeyArr) {
+      if (this.playlists[playlistsKey].id === playlistId) {
+        // if the value sent to the function (playlistId) exists in the array
+        console.log(
+          `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
+        );
+
+        break;
+      } else if (playlistsKeyArr.length === counter) {
+        //if the loop goes through the array and hasn't found a match between the keys and the value sent
+        console.log(`${playlistId} does not exist`);
+        return;
+      }
+      counter++;
+    }
+
+    for (const tracksKey of this.playlists[playlistId].tracks) {
+      // loops through the tracks properties of the object
+      console.log(
+        `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
+      );
+    }
+  },
+
+  addTrackToPlaylist: function (trackId, playlistId) {
+    const tracksKeysArr = Object.keys(this.tracks);
+    let counter = 1;
+    let playlistsKeyArr = Object.keys(this.playlists);
+    let isPlaylist;
+    let isTrack;
+
+    for (const tracksKey of tracksKeysArr) {
+      // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
+      if (trackId === this.tracks[tracksKey].id) {
+        isTrack = true;
+        break;
+      } else if (tracksKeysArr.length === counter) {
+        // if loop has reached the end and it hasn't found a match then function stops
+        console.log(`${trackId} does not exist`);
+        return;
+      }
+      counter++;
+    }
+    counter = 1; // resets counter
+
+    for (const playlistsKey of playlistsKeyArr) {
+      // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
+      if (this.playlists[playlistsKey].id === playlistId) {
+        isPlaylist = true;
+        break;
+      } else if (playlistsKeyArr.length === counter) {
+        console.log(`${playlistId} does not exist`);
+        return;
+      }
+      counter++;
+    }
+
+    if (isPlaylist && isTrack) {
+      // if both playlistId and trackId exist in the object
+      let playlistTrackArr = Object.values(this.playlists[playlistId].tracks);
+      for (const trackInArr of playlistTrackArr) {
+        // checks if track isn't already in the playlist
+        if (trackInArr === trackId) {
+          console.log(`${trackId} is already in ${playlistId}`);
+          return;
+        }
+      }
+    }
+    this.playlists[playlistId].tracks.push(trackId);
+
+    //TO DO: rearreange the array accordingly
+  },
+
+  generateUid: function () {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  },
+
+  addTrack: function (name, artist, album) {
+    const trackId = this.generateUid();
+
+    this.tracks[trackId] = {
+      id: trackId,
+      name: name,
+      artist: artist,
+      album: album,
+    };
+  },
+  addPlaylist: function (name) {
+    const playlistId = this.generateUid();
+
+    this.playlists[playlistId] = {
+      id: playlistId,
+      name: name,
+      tracks: [],
+    };
+  },
 };
 
 /////////////////////////////
 // FUNCTIONS TO IMPLEMENT:
 /////////////////////////////
 
-// prints a list of all playlists, in the form:
-// p01: Coding Music - 2 tracks
-// p02: Other Playlist - 1 tracks
-const printPlaylists = function () {
-  for (const playlistsKey in library.playlists) {
-    console.log(
-      `${library.playlists[playlistsKey].id}: ${library.playlists[playlistsKey].name} - ${library.playlists[playlistsKey].tracks.length} tracks`
-    );
-  }
-};
-
 /* TEST */
-printPlaylists(library);
+library.printPlaylists();
+console.log("------");
 
-// prints a list of all tracks, using the following format:
-// t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
-// t02: Model View Controller by James Dempsey (WWDC 2003)
-// t03: Four Thirty-Three by John Cage (Woodstock 1952)
-const printTracks = function () {
-  for (const tracksKey in library.tracks) {
-    console.log(
-      `${library.tracks[tracksKey].id}: ${library.tracks[tracksKey].name} by ${library.tracks[tracksKey].artist} (${library.tracks[tracksKey].album}) `
-    );
-  }
-};
+library.printTracks();
+console.log("------");
 
-/* TEST */
-printTracks(library);
+console.log("------");
 
-// prints a list of tracks for a given playlist, using the following format:
-// p01: Coding Music - 2 tracks
-// t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
-// t02: Model View Controller by James Dempsey (WWDC 2003)
-const printPlaylist = function (playlistId) {
-  let playlistsKeyArr = Object.keys(library.playlists); //creates an array of the playlists inside of the object
-  let counter = 1; // initializes a counter at 1
-
-  for (const playlistsKey of playlistsKeyArr) {
-    if (library.playlists[playlistsKey].id === playlistId) {
-      // if the value sent to the function (playlistId) exists in the array
-      console.log(
-        `${library.playlists[playlistId].id}: ${library.playlists[playlistId].name} - ${library.playlists[playlistId].tracks.length} tracks`
-      );
-
-      break;
-    } else if (playlistsKeyArr.length === counter) {
-      //if the loop goes through the array and hasn't found a match between the keys and the value sent
-      console.log(`${playlistId} does not exist`);
-      return;
-    }
-    counter++;
-  }
-
-  for (const tracksKey of library.playlists[playlistId].tracks) {
-    // loops through the tracks properties of the library object
-    console.log(
-      `${library.tracks[tracksKey].id}: ${library.tracks[tracksKey].name} by ${library.tracks[tracksKey].artist} (${library.tracks[tracksKey].album}) `
-    );
-  }
-};
-/* TEST */
 let playlistId = "p01";
-printPlaylist(playlistId);
+library.printPlaylist(playlistId);
 console.log("------");
 playlistId = "p02";
-printPlaylist(playlistId);
+library.printPlaylist(playlistId);
 console.log("------");
 playlistId = "p03";
-printPlaylist(playlistId);
+library.printPlaylist(playlistId);
+console.log("------");
 
-// adds an existing track to an existing playlist
-const addTrackToPlaylist = function (trackId, playlistId) {
-  const tracksKeysArr = Object.keys(library.tracks);
-  let counter = 1;
-  let playlistsKeyArr = Object.keys(library.playlists);
-  let isPlaylist;
-  let isTrack;
+console.log("------");
 
-  for (const tracksKey of tracksKeysArr) {
-    // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
-    if (trackId === library.tracks[tracksKey].id) {
-      isTrack = true;
-      break;
-    } else if (tracksKeysArr.length === counter) {
-      // if loop has reached the end and it hasn't found a match then function stops
-      console.log(`${trackId} does not exist`);
-      return;
-    }
-    counter++;
-  }
-  counter = 1; // resets counter
-
-  for (const playlistsKey of playlistsKeyArr) {
-    // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
-    if (library.playlists[playlistsKey].id === playlistId) {
-      isPlaylist = true;
-      break;
-    } else if (playlistsKeyArr.length === counter) {
-      console.log(`${playlistId} does not exist`);
-      return;
-    }
-    counter++;
-  }
-
-  if (isPlaylist && isTrack) {
-    // if both playlistId and trackId exist in the object
-    let playlistTrackArr = Object.values(library.playlists[playlistId].tracks);
-    for (const trackInArr of playlistTrackArr) {
-      // checks if track isn't already in the playlist
-      if (trackInArr === trackId) {
-        console.log(`${trackId} is already in ${playlistId}`);
-        return;
-      }
-    }
-  }
-  library.playlists[playlistId].tracks.push(trackId);
-
-  //TO DO: rearreange the array accordingly
-};
-
-/* TEST */
 addTrackToPlaylist("t02", "p01");
 console.log(library.playlists);
 
-// generates a unique id
-// (already implemented: use this for addTrack and addPlaylist)
-const generateUid = function () {
-  return Math.floor((1 + Math.random()) * 0x10000)
-    .toString(16)
-    .substring(1);
-};
+console.log("------");
 
-// adds a track to the library
-const addTrack = function (name, artist, album) {
-  const trackId = generateUid();
-
-  library.tracks[trackId] = {
-    id: trackId,
-    name: name,
-    artist: artist,
-    album: album,
-  };
-};
-
-/* TEST */
-addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
+library.addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
 console.log(library);
 
-// adds a playlist to the library
-const addPlaylist = function (name) {
-  const playlistId = generateUid();
-
-  library.playlists[playlistId] = {
-    id: playlistId,
-    name: name,
-    tracks: [],
-  };
-};
 /* TEST */
-addPlaylist("Rockin' Music");
+library.addPlaylist("Rockin' Music");
 console.log(library);
 
 // STRETCH:
