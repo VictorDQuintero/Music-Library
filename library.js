@@ -154,8 +154,8 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   // rearreange the array accordingly
 };
 
-addTrackToPlaylist("t02", "p01");
-console.log(library.playlists);
+// addTrackToPlaylist("t02", "p01");
+// console.log(library.playlists);
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
@@ -166,7 +166,19 @@ const generateUid = function () {
 };
 
 // adds a track to the library
-const addTrack = function (name, artist, album) {};
+const addTrack = function (name, artist, album) {
+  const trackId = generateUid();
+
+  library.tracks[trackId] = {
+    id: trackId,
+    name: name,
+    artist: artist,
+    album: album,
+  };
+};
+
+// addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
+// console.log(library);
 
 // adds a playlist to the library
 const addPlaylist = function (name) {};
