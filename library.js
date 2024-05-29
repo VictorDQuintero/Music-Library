@@ -146,10 +146,6 @@ const library = {
   },
 };
 
-/////////////////////////////
-// FUNCTIONS TO IMPLEMENT:
-/////////////////////////////
-
 /* TEST */
 library.printPlaylists();
 console.log("------");
@@ -171,7 +167,7 @@ console.log("------");
 
 console.log("------");
 
-addTrackToPlaylist("t02", "p01");
+library.addTrackToPlaylist("t02", "p01");
 console.log(library.playlists);
 
 console.log("------");
