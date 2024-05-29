@@ -99,14 +99,6 @@ const printPlaylist = function (playlistId) {
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function (trackId, playlistId) {
-  //perhaps some testing would be good:
-  // test that there is a track with that id
-  /* 
-  1. Loop through the number of tracks in the tracks property and check each with the sent trackId
-  2. If it exists continue with the other tests
-  3. If not, return from loop and print track does not exist
-
-  */
   const tracksKeysArr = Object.keys(library.tracks);
   let counter = 1;
   let playlistsKeyArr = Object.keys(library.playlists);
@@ -114,24 +106,25 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   let isTrack;
 
   for (const tracksKey of tracksKeysArr) {
+    // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
     if (trackId === library.tracks[tracksKey].id) {
       isTrack = true;
       break;
     } else if (tracksKeysArr.length === counter) {
+      // if loop has reached the end and it hasn't found a match then function stops
       console.log(`${trackId} does not exist`);
       return;
     }
     counter++;
   }
-  counter = 1;
+  counter = 1; // resets counter
 
   for (const playlistsKey of playlistsKeyArr) {
+    // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
     if (library.playlists[playlistsKey].id === playlistId) {
-      // if the value sent to the function (playlistId) exists in the array
       isPlaylist = true;
       break;
     } else if (playlistsKeyArr.length === counter) {
-      //if the loop goes through the array and hasn't found a match between the keys and the value sent
       console.log(`${playlistId} does not exist`);
       return;
     }
@@ -139,8 +132,10 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   }
 
   if (isPlaylist && isTrack) {
+    // if both playlistId and trackId exist in the object
     let playlistTrackArr = Object.values(library.playlists[playlistId].tracks);
     for (const trackInArr of playlistTrackArr) {
+      // checks if track isn't already in the playlist
       if (trackInArr === trackId) {
         console.log(`${trackId} is already in ${playlistId}`);
         return;
@@ -149,7 +144,7 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   }
   library.playlists[playlistId].tracks.push(trackId);
 
-  // rearreange the array accordingly
+  //TO DO: rearreange the array accordingly
 };
 
 // addTrackToPlaylist("t02", "p01");
