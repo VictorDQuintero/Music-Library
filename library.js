@@ -181,7 +181,17 @@ const addTrack = function (name, artist, album) {
 // console.log(library);
 
 // adds a playlist to the library
-const addPlaylist = function (name) {};
+const addPlaylist = function (name) {
+  const playlistId = generateUid();
+
+  library.playlists[playlistId] = {
+    id: playlistId,
+    name: name,
+    tracks: [],
+  };
+};
+addPlaylist("Rockin' Music");
+console.log(library);
 
 // STRETCH:
 // given a query string string, prints a list of tracks
