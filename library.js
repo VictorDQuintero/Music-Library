@@ -35,12 +35,13 @@ const library = {
 const printPlaylists = function () {
   for (const playlistsKey in library.playlists) {
     console.log(
-      `${playlists[playlistsKey].id}: ${playlists[playlistsKey].name} - ${playlists[playlistsKey].tracks.length} tracks`
+      `${library.playlists[playlistsKey].id}: ${library.playlists[playlistsKey].name} - ${library.playlists[playlistsKey].tracks.length} tracks`
     );
   }
 };
 
-// printPlaylists(library);
+/* TEST */
+printPlaylists(library);
 
 // prints a list of all tracks, using the following format:
 // t01: Code Monkey by Jonathan Coulton (Thing a Week Three)
@@ -49,12 +50,13 @@ const printPlaylists = function () {
 const printTracks = function () {
   for (const tracksKey in library.tracks) {
     console.log(
-      `${tracks[tracksKey].id}: ${tracks[tracksKey].name} by ${tracks[tracksKey].artist} (${tracks[tracksKey].album}) `
+      `${library.tracks[tracksKey].id}: ${library.tracks[tracksKey].name} by ${library.tracks[tracksKey].artist} (${library.tracks[tracksKey].album}) `
     );
   }
 };
 
-// printTracks(library);
+/* TEST */
+printTracks(library);
 
 // prints a list of tracks for a given playlist, using the following format:
 // p01: Coding Music - 2 tracks
@@ -87,15 +89,15 @@ const printPlaylist = function (playlistId) {
     );
   }
 };
-
-// let playlistId = "p01";
-// printPlaylist(playlistId);
-// console.log("------");
-// playlistId = "p02";
-// printPlaylist(playlistId);
-// console.log("------");
-// playlistId = "p03";
-// printPlaylist(playlistId);
+/* TEST */
+let playlistId = "p01";
+printPlaylist(playlistId);
+console.log("------");
+playlistId = "p02";
+printPlaylist(playlistId);
+console.log("------");
+playlistId = "p03";
+printPlaylist(playlistId);
 
 // adds an existing track to an existing playlist
 const addTrackToPlaylist = function (trackId, playlistId) {
@@ -147,8 +149,9 @@ const addTrackToPlaylist = function (trackId, playlistId) {
   //TO DO: rearreange the array accordingly
 };
 
-// addTrackToPlaylist("t02", "p01");
-// console.log(library.playlists);
+/* TEST */
+addTrackToPlaylist("t02", "p01");
+console.log(library.playlists);
 
 // generates a unique id
 // (already implemented: use this for addTrack and addPlaylist)
@@ -170,8 +173,9 @@ const addTrack = function (name, artist, album) {
   };
 };
 
-// addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
-// console.log(library);
+/* TEST */
+addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
+console.log(library);
 
 // adds a playlist to the library
 const addPlaylist = function (name) {
@@ -183,6 +187,7 @@ const addPlaylist = function (name) {
     tracks: [],
   };
 };
+/* TEST */
 addPlaylist("Rockin' Music");
 console.log(library);
 
