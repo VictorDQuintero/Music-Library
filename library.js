@@ -29,6 +29,7 @@ const library = {
     // p02: Other Playlist - 1 tracks
 
     for (const playlistsKey in this.playlists) {
+      //accesses and prints out the objects properties in playlists
       console.log(
         `${this.playlists[playlistsKey].id}: ${this.playlists[playlistsKey].name} - ${this.playlists[playlistsKey].tracks.length} tracks`
       );
@@ -37,6 +38,7 @@ const library = {
 
   printTracks: function() {
     for (const tracksKey in this.tracks) {
+      //accesses and prints out the objects properties in tracks
       console.log(
         `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
       );
@@ -44,33 +46,8 @@ const library = {
   },
 
   printPlaylist: function(playlistId) {
-    // let playlistsKeyArr = Object.keys(this.playlists); //creates an array of the playlists inside of the object
-    // let counter = 1; // initializes a counter at 1
-
-    // for (const playlistsKey of playlistsKeyArr) {
-    //   if (this.playlists[playlistsKey].id === playlistId) {
-    //     // if the value sent to the function (playlistId) exists in the array
-    //     console.log(
-    //       `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
-    //     );
-
-    //     break;
-    //   } else if (playlistsKeyArr.length === counter) {
-    //     //if the loop goes through the array and hasn't found a match between the keys and the value sent
-    //     console.log(`${playlistId} does not exist`);
-    //     return;
-    //   }
-    //   counter++;
-    // }
-
-    // for (const tracksKey of this.playlists[playlistId].tracks) {
-    //   // loops through the tracks properties of the object
-    //   console.log(
-    //     `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
-    //   );
-    // }
-
     if (this.playlists[playlistId]) {
+      //if there is a playlist with that playlistId it will print out the playlist
       console.log(
         `${this.playlists[playlistId].id}: ${this.playlists[playlistId].name} - ${this.playlists[playlistId].tracks.length} tracks`
       );
@@ -81,7 +58,7 @@ const library = {
     }
 
     for (const tracksKey of this.playlists[playlistId].tracks) {
-      // loops through the tracks properties of the object
+      // loops through the tracks properties of the tracks nested object
       console.log(
         `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
       );
@@ -89,69 +66,27 @@ const library = {
   },
 
   addTrackToPlaylist: function(trackId, playlistId) {
-    // const tracksKeysArr = Object.keys(this.tracks);
-    // let counter = 1;
-    // let playlistsKeyArr = Object.keys(this.playlists);
-    // let isPlaylist;
-    // let isTrack;
-
-    // for (const tracksKey of tracksKeysArr) {
-    //   // loop to go through the tracks properties' keys and checks whether the track id sent to the function exists
-    //   if (trackId === this.tracks[tracksKey].id) {
-    //     isTrack = true;
-    //     break;
-    //   } else if (tracksKeysArr.length === counter) {
-    //     // if loop has reached the end and it hasn't found a match then function stops
-    //     console.log(`${trackId} does not exist`);
-    //     return;
-    //   }
-    //   counter++;
-    // }
-    // counter = 1; // resets counter
-
-    // for (const playlistsKey of playlistsKeyArr) {
-    //   // loop to go through the playlists properties' keys and checks whether the playlist id sent to the function exists
-    //   if (this.playlists[playlistsKey].id === playlistId) {
-    //     isPlaylist = true;
-    //     break;
-    //   } else if (playlistsKeyArr.length === counter) {
-    //     console.log(`${playlistId} does not exist`);
-    //     return;
-    //   }
-    //   counter++;
-    // }
-
-    // if (isPlaylist && isTrack) {
-    //   // if both playlistId and trackId exist in the object
-    //   let playlistTrackArr = Object.values(this.playlists[playlistId].tracks);
-    //   for (const trackInArr of playlistTrackArr) {
-    //     // checks if track isn't already in the playlist
-    //     if (trackInArr === trackId) {
-    //       console.log(`${trackId} is already in ${playlistId}`);
-    //       return;
-    //     }
-    //   }
-    // }
-    // this.playlists[playlistId].tracks.push(trackId);
-
-    //TO DO: rearreange the array accordingly
-
     if (this.playlists[playlistId].id) {
+      //checks that the playlist exists
       if (this.tracks[trackId].id) {
-        for (const track of Object.values(this.playlists[playlistId].tracks)) {
+        // checks that the track exists
+        for (const track of this.playlists[playlistId].tracks) {
+          // loops through an array of the tracks in a playlist
           if (track === trackId) {
             console.log(`${trackId} is already in ${playlistId}`);
             return;
           }
         }
       } else {
+        // if playlistId sent doesn't exist in object
         console.log(`${playlistId} does not exist`);
       }
     } else {
+      // if trackId sent doesn't exist in object
       console.log(`${trackId} does not exist`);
     }
 
-    this.playlists[playlistId].tracks.push(trackId);
+    this.playlists[playlistId].tracks.push(trackId); // if all existence tests pass, pushes trackId into track array of the playlist object
   },
 
   generateUid: function() {
@@ -161,9 +96,10 @@ const library = {
   },
 
   addTrack: function(name, artist, album) {
-    const trackId = this.generateUid();
+    const trackId = this.generateUid(); // generates random number, assigns it to trackId
 
     this.tracks[trackId] = {
+      // creates new track object inside library.tracks
       id: trackId,
       name: name,
       artist: artist,
@@ -174,32 +110,41 @@ const library = {
     const playlistId = this.generateUid();
 
     this.playlists[playlistId] = {
+      // creates new playlist object inside playlist.tracks
       id: playlistId,
       name: name,
       tracks: [],
     };
   },
   printSearchResults: function(query) {
+    // // given a query string string, prints a list of tracks where the name, artist or album contains the query string (case insensitive)
+    let isMatch = false;
     for (const tracksKey in this.tracks) {
+      // loops through the tracks keys inside the tracks object
       for (const track of Object.keys(this.tracks[tracksKey])) {
+        // creates and loops through an array of the property keys inside each track object.
         if (this.tracks[tracksKey][track].search(query) !== -1) {
+          // if search finds a match, it prints out all of the track's info that match
+          isMatch = true;
           console.log(
             `${this.tracks[tracksKey].id}: ${this.tracks[tracksKey].name} by ${this.tracks[tracksKey].artist} (${this.tracks[tracksKey].album}) `
           );
         }
       }
     }
+
+    if (!isMatch) {
+      console.log("There is no match");
+    }
   },
 };
 
 /* TEST */
 // library.printPlaylists();
-// console.log("------");
+// console.log("\n------\n");
 
 // library.printTracks();
-// console.log("------");
-
-// console.log("------");
+// console.log("\n------\n");
 
 // let playlistId = "p01";
 // library.printPlaylist(playlistId);
@@ -211,24 +156,25 @@ const library = {
 // library.printPlaylist(playlistId);
 // console.log("------");
 
-// console.log("------");
+// console.log("\n------\n");
 
 // library.addTrackToPlaylist("t03", "p01");
+// library.addTrackToPlaylist("t01", "p02");
+// library.addTrackToPlaylist("t02", "p01");
 // console.log(library.playlists);
 
-// console.log("------");
+// console.log("\n------\n");
 
 // library.addTrack("Smoke On The Water", "Deep Purple", "Machine Head");
 // console.log(library);
 
-// /* TEST */
+// console.log("\n------\n");
+
 // library.addPlaylist("Rockin' Music");
 // console.log(library);
 
-// // STRETCH:
-// // given a query string string, prints a list of tracks
-// // where the name, artist or album contains the query string (case insensitive)
-// // tip: use "string".search("tri")
-// // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
+// console.log("\n------\n");
 
-//printSearchResults(/ode/i);
+// library.printSearchResults(/ode/i);
+// console.log("------");
+// library.printSearchResults(/Ziltoid/i);
